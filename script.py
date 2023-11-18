@@ -1,3 +1,6 @@
+import locale
+locale.setlocale(locale.LC_ALL, '')
+
 daily_sales = \
 """Edith Mcbride   ;,;$1.21   ;,;   white ;,; 
 09/15/17   ,Herbert Tran   ;,;   $7.29;,; 
@@ -132,3 +135,8 @@ for transaction in transactions_clean:
 print(customers)
 print(sales)
 print(thread_sold)
+
+total_sales = 0
+for sale in sales:
+    total_sales += float(sale.strip("$"))
+print(locale.currency(total_sales, grouping=True))
