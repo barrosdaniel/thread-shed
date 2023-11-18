@@ -121,7 +121,6 @@ for transaction in daily_transactions_split:
     for data in transaction:
         transaction_clean.append(data.strip())
     transactions_clean.append(transaction_clean)
-print(transactions_clean)
 
 customers = []
 sales = []
@@ -132,11 +131,27 @@ for transaction in transactions_clean:
     sales.append(transaction[1])
     thread_sold.append(transaction[2])
 
-print(customers)
-print(sales)
-print(thread_sold)
-
 total_sales = 0
 for sale in sales:
     total_sales += float(sale.strip("$"))
-print(locale.currency(total_sales, grouping=True))
+print(f"Total sales today: {locale.currency(total_sales, grouping=True)}")
+
+thread_sold_split = []
+for thread in thread_sold:
+    if "&" in thread:
+        split_thread = thread.split("&")
+        for colour in split_thread:
+            thread_sold_split.append(colour)
+    else:
+        thread_sold_split.append(thread)
+
+def color_count(color):
+    count = 0
+    for colour in thread_sold_split:
+        if colour == color:
+            count += 1
+    return count
+
+colors = ['red', 'yellow', 'green', 'white', 'black', 'blue', 'purple']
+for colour in colors:
+    print(f"The count of {colour} threads sold today: {color_count(colour)}")
